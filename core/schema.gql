@@ -1,0 +1,51 @@
+scalar DateTime
+scalar Date
+
+extend type TokenAuth {
+	user: User
+}
+
+type Query {
+	posts: [Post]!
+	post(postId: String!): Post!
+}
+
+type Mutation {
+	createPost(input: CreatePostInput!): Post!
+	updatePost(input: UpdatePostInput!): Post!
+	deletePost(postId: String!): Boolean!
+
+	signupUser(input: UserCredentials!): User!
+
+	verifyToken(token: String!): VerifyToken
+	refreshToken(token: String!): RefreshToken
+	tokenAuth(username: String!, password: String!): TokenAuth
+}
+
+input UserCredentials {
+	username: String!
+	email: String!
+	password: String!
+}
+
+input UpdatePostInput {
+	title: String
+	truncatedBody: String
+	body: String
+	grade: String
+	city: String
+	state: String
+	zipCode: String
+}
+
+input CreatePostInput {
+	title: String!
+	body: String!
+	grade: String
+	city: String
+	state: String
+	zipCode: String
+	ups: Int
+	downs: Int
+	score: Int
+}
