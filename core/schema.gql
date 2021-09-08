@@ -19,11 +19,10 @@ type Mutation {
 
 	verifyToken(token: String!): VerifyToken
 	refreshToken(token: String!): RefreshToken
-	tokenAuth(username: String!, password: String!): TokenAuth
+	tokenAuth(email: String!, password: String!): TokenAuth
 }
 
 input UserCredentials {
-	username: String!
 	email: String!
 	password: String!
 }

@@ -19,8 +19,6 @@ def resolve_signup_user(obj, info, input):
     """Takes an input dict consisting of email, username and password to sign up a new user then returns the user"""
     if User.objects.filter(email=input["email"]).exists():
         raise GraphQLError("This email already exists please try another email")
-    if User.objects.filter(username=input["username"]).exists():
-        raise GraphQLError("This username already exists please try another email")
     user = User.objects.create_user(**input)
     user.save()
     return user
