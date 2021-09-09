@@ -16,7 +16,7 @@ def resolve_token_auth(obj, info, **kwargs):
 
 @convert_kwargs_to_snake_case
 def resolve_signup_user(obj, info, input):
-    """Takes an input dict consisting of email, username and password to sign up a new user then returns the user"""
+    """Takes an input dict consisting of email and password to sign up a new user then returns the user"""
     if User.objects.filter(email=input["email"]).exists():
         raise GraphQLError("This email already exists please try another email")
     user = User.objects.create_user(**input)

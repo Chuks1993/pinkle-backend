@@ -4,15 +4,13 @@ type User {
 	lastName: String
 	email: String!
 	dateJoined: DateTime!
-	dob: DateTime
-	city: String
-	state: String
+	dateOfBirth: DateTime
 	zipCode: String
 	students: [Student]
 }
 
 type Student {
 	teacher: User
-	dob: DateTime
+	dateOfBirth: DateTime
 	grade: String!
 }
