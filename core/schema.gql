@@ -15,16 +15,24 @@ type Mutation {
 	updatePost(input: UpdatePostInput!): Post!
 	deletePost(postId: String!): Boolean!
 
-	signupUser(input: UserCredentials!): User!
+	signupUser(input: SignupUserInput!): User!
 
 	verifyToken(token: String!): VerifyToken
 	refreshToken(token: String!): RefreshToken
 	tokenAuth(email: String!, password: String!): TokenAuth
 }
 
-input UserCredentials {
+input SignupUserInput {
 	email: String!
 	password: String!
+	dateOfBirth: DateTime
+	zipCode: String
+	students: [StudentInput]
+}
+
+input StudentInput {
+	dateOfBirth: DateTime
+	grade: String!
 }
 
 input UpdatePostInput {
