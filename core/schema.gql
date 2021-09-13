@@ -25,6 +25,8 @@ type Mutation {
 input SignupUserInput {
 	email: String!
 	password: String!
+	firstName: String
+	lastName: String
 	dateOfBirth: DateTime
 	zipCode: String
 	students: [StudentInput]
