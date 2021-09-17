@@ -4,8 +4,6 @@ type Post {
 	truncatedBody: String!
 	body: String!
 	grade: String
-	city: String
-	state: String
 	zipCode: String
 	createdAt: Date!
 	updatedAt: Date!

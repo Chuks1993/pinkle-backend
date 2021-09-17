@@ -31,9 +31,10 @@ class Post(models.Model):
     )
     body = models.TextField(verbose_name=_("Post body"), help_text=_("Required"), max_length=50)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    parent = models.ForeignKey(
-        "self", null=True, blank=True, related_name="comments", db_index=True, on_delete=models.CASCADE
-    )
+    zip_code = models.CharField(_("zip code"), max_length=5, null=True, blank=True)
+    # parent = models.ForeignKey(
+    #     "self", null=True, blank=True, related_name="comments", db_index=True, on_delete=models.CASCADE
+    # )
     truncated_body = models.CharField(verbose_name=_("Truncated body text"), help_text=_("Required"), max_length=50)
     grade = models.CharField(
         null=True,
@@ -42,6 +43,7 @@ class Post(models.Model):
         help_text=_("Required, 2 to 3 letter grade"),
         max_length=3,
     )
+
     created_at = models.DateTimeField(_("Created at"), auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     up_votes = models.IntegerField(_("Up votes"), default=0)

@@ -8,6 +8,7 @@ extend type TokenAuth {
 type Query {
 	posts: [Post]!
 	post(postId: String!): Post!
+	me: User!
 }
 
 type Mutation {
@@ -17,9 +18,18 @@ type Mutation {
 
 	signupUser(input: SignupUserInput!): User!
 
+	updateUser(input: UpdateUserInput): User!
 	verifyToken(token: String!): VerifyToken
 	refreshToken(token: String!): RefreshToken
 	tokenAuth(email: String!, password: String!): TokenAuth
+}
+input UpdateUserInput {
+	email: String
+	firstName: String
+	lastName: String
+	dateOfBirth: DateTime
+	zipCode: String
+	students: [StudentInput]
 }
 
 input SignupUserInput {
