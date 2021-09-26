@@ -15,9 +15,12 @@ def resolve_posts(*_):
 @convert_kwargs_to_snake_case
 def resolve_post(self, info, post_id):
     """Returns Post based on post ID"""
-    post = Post.objects.get(pk=post_id)
-    comments = Comment.objects.filter(post=post)
-    return {"post": post, "comments": comments}
+    return Post.objects.get(pk=post_id)
+
+
+@convert_kwargs_to_snake_case
+def resolve_comments(self, info, post_id):
+    return Comment.objects.filter(post=post_id)
 
 
 @login_required

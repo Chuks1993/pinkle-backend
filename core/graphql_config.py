@@ -31,7 +31,7 @@ mutation.set_field("deletePost", pinkle.resolvers.resolve_delete_post)
 mutation.set_field("addComment", pinkle.resolvers.resolve_add_comment)
 mutation.set_field("removeComment", pinkle.resolvers.resolve_remove_comment)
 mutation.set_field("updateComment", pinkle.resolvers.resolve_update_comment)
-
+mutation.set_field("comments", pinkle.resolvers.resolve_comments)
 
 # User
 query.set_field("me", account.resolvers.resolve_me)
