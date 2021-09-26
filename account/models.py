@@ -58,8 +58,15 @@ class User(AbstractUser, models.Model):
 
 
 class Student(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    teacher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, null=True, blank=True)
+    last_name = models.CharField(max_length=100, null=True, blank=True)
+    age = models.SmallIntegerField(null=True, blank=True)
+    teacher = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     date_of_birth = models.DateField(null=True, blank=True)
     grade = models.CharField(max_length=3)
 

@@ -7,8 +7,12 @@ type Post {
 	zipCode: String
 	createdAt: Date!
 	updatedAt: Date!
-	ups: Int!
-	downs: Int!
-	score: Int!
 	author: User!
+	comments: [Comment]
+}
+
+type Comment {
+	body: String!
+	user: User!
+	createdAt: Date!
 }

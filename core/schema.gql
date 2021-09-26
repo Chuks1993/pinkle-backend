@@ -7,22 +7,37 @@ extend type TokenAuth {
 
 type Query {
 	posts: [Post]!
-	post(postId: String!): Post!
+	post(postId: String!): PostResult!
 	me: User!
 }
 
+type PostResult {
+	post: Post!
+	comments: [Comment!]
+}
+
 type Mutation {
-	createPost(input: CreatePostInput!): Post!
-	updatePost(input: UpdatePostInput!): Post!
+	createPost(createPostInput: CreatePostInput!): Post!
+	updatePost(updatePostInput: UpdatePostInput!): Post!
 	deletePost(postId: String!): Boolean!
 
-	signupUser(input: SignupUserInput!): User!
+	signupUser(signupUserInput: SignupUserInput!): User!
+	toggleLike(postId: Int!): Boolean!
 
-	updateUser(input: UpdateUserInput): User!
+	addComment(commentInput: CommentInput, postId: String!): Comment!
+	removeComment(commentId: Int!): Boolean!
+	updateComment(commentInput: CommentInput): Comment!
+
+	updateUser(updateUserInput: UpdateUserInput): User!
 	verifyToken(token: String!): VerifyToken
 	refreshToken(token: String!): RefreshToken
 	tokenAuth(email: String!, password: String!): TokenAuth
 }
+
+input CommentInput {
+	body: String!
+}
+
 input UpdateUserInput {
 	email: String
 	firstName: String

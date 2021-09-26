@@ -17,17 +17,29 @@ type_defs = [
 ]
 
 query = QueryType()
+mutation = MutationType()
+
+# Post
 query.set_field("posts", pinkle.resolvers.resolve_posts)
 query.set_field("post", pinkle.resolvers.resolve_post)
-query.set_field("me", account.resolvers.resolve_me)
 
-mutation = MutationType()
 mutation.set_field("createPost", pinkle.resolvers.resolve_create_post)
 mutation.set_field("deletePost", pinkle.resolvers.resolve_delete_post)
+# mutation.set_field("createVote", pinkle.resolvers.resolve_create_vote)
+# mutation.set_field("toggleLike", pinkle.resolvers.resolve_toggle_like)
+
+mutation.set_field("addComment", pinkle.resolvers.resolve_add_comment)
+mutation.set_field("removeComment", pinkle.resolvers.resolve_remove_comment)
+mutation.set_field("updateComment", pinkle.resolvers.resolve_update_comment)
+
+
+# User
+query.set_field("me", account.resolvers.resolve_me)
 
 mutation.set_field("signupUser", account.resolvers.resolve_signup_user)
 mutation.set_field("updateUser", account.resolvers.resolve_update_user)
 
+# Authentication
 mutation.set_field("verifyToken", resolve_verify)
 mutation.set_field("refreshToken", resolve_refresh)
 mutation.set_field("tokenAuth", account.resolvers.resolve_token_auth)
