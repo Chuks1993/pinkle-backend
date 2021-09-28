@@ -25,13 +25,13 @@ query.set_field("post", pinkle.resolvers.resolve_post)
 
 mutation.set_field("createPost", pinkle.resolvers.resolve_create_post)
 mutation.set_field("deletePost", pinkle.resolvers.resolve_delete_post)
+mutation.set_field("togglePostFavorite", pinkle.resolvers.resolve_toggle_post_favorite)
 # mutation.set_field("createVote", pinkle.resolvers.resolve_create_vote)
-# mutation.set_field("toggleLike", pinkle.resolvers.resolve_toggle_like)
 
 mutation.set_field("addComment", pinkle.resolvers.resolve_add_comment)
 mutation.set_field("removeComment", pinkle.resolvers.resolve_remove_comment)
 mutation.set_field("updateComment", pinkle.resolvers.resolve_update_comment)
-mutation.set_field("comments", pinkle.resolvers.resolve_comments)
+query.set_field("comments", pinkle.resolvers.resolve_comments)
 
 # User
 query.set_field("me", account.resolvers.resolve_me)

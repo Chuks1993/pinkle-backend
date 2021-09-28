@@ -8,7 +8,7 @@ extend type TokenAuth {
 type Query {
 	posts: [Post]!
 	post(postId: String!): Post!
-	comments(postId: String!) [Comment]!
+	comments(postId: String!): [Comment]!
 	me: User!
 }
 
@@ -28,6 +28,8 @@ type Mutation {
 	addComment(commentInput: CommentInput, postId: String!): Comment!
 	removeComment(commentId: Int!): Boolean!
 	updateComment(commentInput: CommentInput): Comment!
+
+	togglePostFavorite(postId: String!): Boolean!
 
 	updateUser(updateUserInput: UpdateUserInput): User!
 	verifyToken(token: String!): VerifyToken

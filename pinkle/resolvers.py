@@ -56,11 +56,30 @@ def resolve_create_post(self, info, create_post_input):
 
 @convert_kwargs_to_snake_case
 @login_required
-def resolve_toggle_like(self, info, comment_id):
+def resolve_toggle_post_favorite(self, info, post_id):
     user = info.context.get("request").user
     post = Post.objects.get(pk=post_id)
+    favorited = False
     if post.favorites.filter(id=user.id).exists():
         post.favorites.remove(user)
+    else:
+        favorited = True
+        post.favorites.add(user)
+    return favorited
+
+
+# @convert_kwargs_to_snake_case
+# @login_required
+# def resolve_toggle_like(self, info, comment_id):
+#     user = info.context.get("request").user
+#     post = Post.objects.get(pk=post_id)
+#     favorited = False
+#     if post.favorites.filter(id=user.id).exists():
+#         post.favorites.remove(user)
+#     else:
+#         favorited = True
+#         post.favorites.add(user)
+#     return favorited
 
 
 # @convert_kwargs_to_snake_case

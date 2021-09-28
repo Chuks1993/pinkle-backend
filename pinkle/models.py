@@ -25,11 +25,11 @@ from pinkle.utils.utility_func import wsi_confidence
 #         return self.name
 
 
-class Tag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+# class Tag(models.Model):
+#     name = models.CharField(max_length=50, unique=True)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 
 class Post(models.Model):
@@ -45,8 +45,8 @@ class Post(models.Model):
     truncated_body = models.CharField(verbose_name=_("Truncated body text"), help_text=_("Required"), max_length=50)
     created_at = models.DateTimeField(_("Created at"), auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
-    tags = models.ManyToManyField(Tag, blank=True)
-    # favorites = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, default=None, related_name="favorites")
+    # tags = models.ManyToManyField(Tag, blank=True)
+    favorites = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, default=None, related_name="favorites")
     # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="post_likes", default=None, blank=True)
     # like_count = models.BigIntegerField(default="0")
 
@@ -75,6 +75,14 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ["created_at"]
+
+
+# class Like(models.Model):
+#     post = models.ForeignKey(Post, related_name="post_likes", on_delete=models.CASCADE, blank=True, null=True)
+#     comment = models.ForeignKey(Comment, related_name="post_likes", on_delete=models.CASCADE, blank=True, null=True)
+#     user = models.ForeignKey(
+#         settings.AAUTH_USER_MODEL, related_name="votes_done", on_delete=models.CASCADE, null=False
+#     )
 
 
 # class Like(models.Model):
