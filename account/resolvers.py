@@ -38,8 +38,7 @@ def resolve_update_user(obj, info, input):
 @login_required
 def resolve_me(obj, info):
     user = info.context.get("request").user
-    posts = Post.objects.filter(author=author)
-    return {"user": user, "posts": posts}
+    return user
 
 
 # def resolve_user(self, info, user_id):

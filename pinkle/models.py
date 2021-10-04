@@ -46,7 +46,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(_("Created at"), auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     # tags = models.ManyToManyField(Tag, blank=True)
-    favorites = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, default=None, related_name="favorites")
+    favorites = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, blank=True, default=None, related_name="users_favorited"
+    )
     # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="post_likes", default=None, blank=True)
     # like_count = models.BigIntegerField(default="0")
 
@@ -68,7 +70,7 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="comment_likes")
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="users_liked")
     # up_votes = models.IntegerField(default=0)
     # def total_likes(self):
     #     return self.likes.count()

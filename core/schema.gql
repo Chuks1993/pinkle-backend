@@ -9,7 +9,7 @@ type Query {
 	posts: [Post]!
 	post(postId: String!): Post!
 	comments(postId: String!): [Comment]!
-	me: User!
+	me: User
 }
 
 type PostResult {
