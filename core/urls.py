@@ -14,7 +14,8 @@ urlpatterns = [
             GraphQLView.as_view(
                 schema=schema,
                 playground_options={"settings": {"request.credentials": "include"}},
-                validation_rules=[cost_validator(maximum_cost=5, default_complexity=1)],
+                # TODO: Fix validation rules as it breaks graphql query inputs for some reason
+                # validation_rules=[cost_validator(maximum_cost=5, default_complexity=1)],
             )
         ),
         name="graphql",
