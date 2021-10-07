@@ -1,9 +1,9 @@
 import uuid
 
 from django.conf import settings
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from django.core.validators import RegexValidator
 from django.db import models
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from pinkle.utils.utility_func import wsi_confidence
@@ -43,29 +43,36 @@ class Post(models.Model):
     body = models.TextField(verbose_name=_("Post body"), help_text=_("Required"), max_length=50)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     zip_code = models.CharField(_("zip code"), max_length=5, null=True, blank=True)
-    created_at = models.DateTimeField(_("Created at"), default=timezone.now, editable=False)
+    created_at = models.DateTimeField(_("Created at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     # tags = models.ManyToManyField(Tag, blank=True)
     favorites = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True, default=None, related_name="users_favorited"
     )
-    # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="post_likes", default=None, blank=True)
-    # like_count = models.BigIntegerField(default="0")
-
-    # def total_likes(self):
-    #     return self.likes.count()
 
     @property
     def truncated_body(self):
         return self.body[:100]
 
+    @property
+    def favorite_count(self):
+        return self.favorites.count()
+
+    @property
+    def natural_created_at(self):
+        return naturaltime(self.created_at)
+
+    @property
+    def post_comments(self):
+        return list(Comment.objects.filter(post=self))
+
+    @property
+    def comment_count(self):
+        print(list(Comment.objects.filter(post=self)))
+        return 1
+
     class Meta:
         ordering = ["-created_at"]
-
-    # def save(self, *args, **kwargs):
-    #     if not self.truncated_body:
-    #         self.truncated_body = self.body[:100]
-    #     super(Post, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):
@@ -76,28 +83,16 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="users_liked")
 
-    def humanize_time(self):
-        return humanized_time(self.created_at)
+    @property
+    def natural_created_at(self):
+        return naturaltime(self.created_at)
 
-    # up_votes = models.IntegerField(default=0)
-    # def total_likes(self):
-    #     return self.likes.count()
+    @property
+    def like_count(self):
+        return self.likes.count()
 
     class Meta:
         ordering = ["created_at"]
-
-
-# class Like(models.Model):
-#     post = models.ForeignKey(Post, related_name="post_likes", on_delete=models.CASCADE, blank=True, null=True)
-#     comment = models.ForeignKey(Comment, related_name="post_likes", on_delete=models.CASCADE, blank=True, null=True)
-#     user = models.ForeignKey(
-#         settings.AAUTH_USER_MODEL, related_name="votes_done", on_delete=models.CASCADE, null=False
-#     )
-
-
-# class Like(models.Model):
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 # class Notification(models.Model):

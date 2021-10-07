@@ -18,11 +18,6 @@ def resolve_post(self, info, post_id):
     return Post.objects.get(pk=post_id)
 
 
-@convert_kwargs_to_snake_case
-def resolve_comments(self, info, post_id):
-    return Comment.objects.filter(post=post_id)
-
-
 @login_required
 @convert_kwargs_to_snake_case
 def resolve_update_post(self, info, post_id, input):

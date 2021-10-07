@@ -8,7 +8,6 @@ extend type TokenAuth {
 type Query {
 	posts: [Post]!
 	post(postId: String!): Post!
-	comments(postId: String!): [Comment]!
 	me: User
 }
 

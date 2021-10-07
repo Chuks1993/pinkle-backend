@@ -31,7 +31,6 @@ mutation.set_field("togglePostFavorite", pinkle.resolvers.resolve_toggle_post_fa
 mutation.set_field("addComment", pinkle.resolvers.resolve_add_comment)
 mutation.set_field("removeComment", pinkle.resolvers.resolve_remove_comment)
 mutation.set_field("updateComment", pinkle.resolvers.resolve_update_comment)
-query.set_field("comments", pinkle.resolvers.resolve_comments)
 
 # User
 query.set_field("me", account.resolvers.resolve_me)
