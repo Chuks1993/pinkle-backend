@@ -3,6 +3,7 @@ import uuid
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from pinkle.utils.utility_func import wsi_confidence
@@ -42,8 +43,7 @@ class Post(models.Model):
     body = models.TextField(verbose_name=_("Post body"), help_text=_("Required"), max_length=50)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     zip_code = models.CharField(_("zip code"), max_length=5, null=True, blank=True)
-    truncated_body = models.CharField(verbose_name=_("Truncated body text"), help_text=_("Required"), max_length=50)
-    created_at = models.DateTimeField(_("Created at"), auto_now_add=True, editable=False)
+    created_at = models.DateTimeField(_("Created at"), default=timezone.now, editable=False)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     # tags = models.ManyToManyField(Tag, blank=True)
     favorites = models.ManyToManyField(
@@ -55,13 +55,17 @@ class Post(models.Model):
     # def total_likes(self):
     #     return self.likes.count()
 
+    @property
+    def truncated_body(self):
+        return self.body[:100]
+
     class Meta:
         ordering = ["-created_at"]
 
-    def save(self, *args, **kwargs):
-        if not self.truncated_body:
-            self.truncated_body = self.body[:100]
-        super(Post, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if not self.truncated_body:
+    #         self.truncated_body = self.body[:100]
+    #     super(Post, self).save(*args, **kwargs)
 
 
 class Comment(models.Model):
@@ -71,6 +75,10 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="users_liked")
+
+    def humanize_time(self):
+        return humanized_time(self.created_at)
+
     # up_votes = models.IntegerField(default=0)
     # def total_likes(self):
     #     return self.likes.count()
