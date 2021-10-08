@@ -64,12 +64,11 @@ class Post(models.Model):
 
     @property
     def post_comments(self):
-        return list(Comment.objects.filter(post=self))
+        return Comment.objects.filter(post=self)
 
     @property
     def comment_count(self):
-        print(list(Comment.objects.filter(post=self)))
-        return 1
+        return Comment.objects.filter(post=self).count()
 
     class Meta:
         ordering = ["-created_at"]
