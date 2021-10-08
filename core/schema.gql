@@ -9,6 +9,9 @@ type Query {
 	posts: [Post]!
 	post(postId: String!): Post!
 	me: User
+
+	# getFavoritesByPostId(postId: String!): [User]
+	# getLikesByCommentId(commentId: String!): [User!]
 }
 
 type Mutation {

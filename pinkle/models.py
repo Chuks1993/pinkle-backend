@@ -50,6 +50,9 @@ class Post(models.Model):
         settings.AUTH_USER_MODEL, blank=True, default=None, related_name="users_favorited"
     )
 
+    # def get_all_favorites(self):
+    #     return self.favorites.all()
+
     @property
     def truncated_body(self):
         return self.body[:100]
@@ -81,6 +84,9 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name="users_liked")
+
+    # def get_likes(self):
+    #     return self.likes.all()
 
     @property
     def natural_created_at(self):
