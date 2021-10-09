@@ -46,6 +46,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(_("Created at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     # tags = models.ManyToManyField(Tag, blank=True)
+    # TODO: Add image fields
     favorites = models.ManyToManyField(
         settings.AUTH_USER_MODEL, blank=True, default=None, related_name="users_favorited"
     )
@@ -55,18 +56,19 @@ class Post(models.Model):
 
     @property
     def truncated_body(self):
-        return self.body[:100]
+        return self.body[:500]
 
     @property
     def favorite_count(self):
         return self.favorites.count()
 
+    # TODO: perhaps do this on the frontend
     @property
     def natural_created_at(self):
         return naturaltime(self.created_at)
 
     @property
-    def post_comments(self):
+    def all_comments(self):
         return Comment.objects.filter(post=self)
 
     @property

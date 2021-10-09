@@ -12,7 +12,7 @@ type Post {
 	favoriteCount: Int!
 	naturalCreatedAt: String!
 	commentCount: Int!
-	postComments: [Comment]
+	allComments: [Comment]
 }
 
 type Comment {
